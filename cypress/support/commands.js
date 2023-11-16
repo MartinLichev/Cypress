@@ -23,3 +23,19 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('getIframeBody', (iframeSelector) => {
+    return cy
+        .get(iframeSelector, {
+            log: false
+        })
+        .its('0.contentDocument.body').should('not.be.empty')
+        .then(cy.wrap);
+});
+
+Cypress.Commands.add('getIframeBodyWaiting', (iframeSelector) => {
+    return cy
+      .get(iframeSelector, { timeout: 10000 })
+      .its('0.contentDocument.body').should('not.be.empty')
+      .then(cy.wrap);
+  });
